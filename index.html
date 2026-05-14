@@ -29,7 +29,7 @@
         th { background-color: #f8f9fa; font-weight: bold; color: #333; position: sticky; top: 0; }
         tr:hover { background-color: #f1f1f1; }
 
-        /* GIAO DIỆN CHỌN BÀI THI (SELECTION SCREEN - GRID 400 ĐỀ) */
+        /* GIAO DIỆN CHỌN BÀI THI (SELECTION SCREEN) */
         .selection-container { background: #f9f9f9; padding: 0; border-radius: 8px; width: 85vw; max-width: 1200px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; }
         .selection-header-title { background: #fff; padding: 20px; font-weight: bold; font-size: 22px; color: #0056b3; border-bottom: 2px solid #eef2f7; text-align: center; }
         .selection-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; padding: 20px; list-style: none; margin: 0; max-height: 65vh; overflow-y: auto; }
@@ -63,77 +63,53 @@
         select, .blank-input { padding: 4px; border: 1px solid #adb5bd; border-radius: 4px; margin-right: 10px; font-size: 14px; outline: none; font-family: inherit; }
         .blank-input:focus { border-color: #0056b3; box-shadow: 0 0 3px rgba(0,86,179,0.3); }
         
-        /* Tabs góc dưới trái */
+        /* Khoảng cách chuẩn cho khung điền từ (Summary / Flowchart) */
+        .summary-box { line-height: 2.3; text-align: justify; padding: 15px; background: #f9f9f9; border-radius: 5px; }
+
+        /* TABS VÀ BADGE TIẾN ĐỘ */
         .tabs-area { position: fixed; bottom: 15px; left: 15px; display: flex; gap: 8px; z-index: 2000; }
-        .tab-btn { padding: 6px 15px; background-color: #fff; color: #0056b3; border: 2px solid #0056b3; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.3s; }
+        .tab-btn { position: relative; padding: 6px 15px; background-color: #fff; color: #0056b3; border: 2px solid #0056b3; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.3s; }
         .tab-btn:hover { background-color: #e6f0fa; }
         .tab-btn.active { background-color: #0056b3; color: #fff; }
+        
+        .tab-badge { position: absolute; top: -8px; right: -8px; background-color: #ffc107; color: #333; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1.5px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-weight: bold; transition: all 0.3s ease; }
+        .tab-badge.completed { background-color: #28a745; color: white; }
 
-        /* Nút Submit & Điều hướng phụ */
+        /* SUBMIT & ĐIỀU HƯỚNG */
         .submit-area { position: fixed; bottom: 15px; right: 15px; display: flex; align-items: center; z-index: 2000; }
-        
         #finalResult { margin-right: 10px; font-size: 13px; font-weight: bold; background: #fff; padding: 6px 15px; border: 2px solid #28a745; border-radius: 4px; color: #28a745; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: none; }
-        
         .submit-btn { padding: 6px 15px; background-color: #28a745; color: white; border: 2px solid #28a745; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; transition: 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .submit-btn:hover { background-color: #218838; border-color: #218838; }
         .submit-btn:disabled { background-color: #6c757d; border-color: #6c757d; cursor: not-allowed; }
-
         #exit-btn { display: none; background-color: #0056b3; border-color: #0056b3; margin-left: 10px; }
         #exit-btn:hover { background-color: #004494; border-color: #004494; }
         
-        /* Nút Quay lại Kho Đề (Back to Test Bank) */
         .back-bank-btn { position: fixed; top: 15px; right: 15px; padding: 6px 15px; background-color: #dc3545; color: white; border: 2px solid #dc3545; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; z-index: 2000; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.3s; }
         .back-bank-btn:hover { background-color: #c82333; border-color: #c82333; }
 
-        /* Đồng hồ đếm ngược */
+        /* ĐỒNG HỒ ĐẾM NGƯỢC */
         #exam-timer { position: fixed; top: 15px; left: 15px; background-color: #fff; border: 2px solid #28a745; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; color: #28a745; z-index: 2000; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: color 0.3s, border-color 0.3s, background-color 0.3s; }
         .timer-warning { color: #dc3545 !important; border-color: #dc3545 !important; }
         @keyframes shakeTimer { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
         .shake-anim { animation: shakeTimer 0.4s; animation-iteration-count: 4; }
 
-        /* CSS Nút Highlight */
+        /* HIGHLIGHT TOOLTIPS */
         #highlight-tooltip, #remove-highlight-tooltip { position: absolute; display: none; color: #fff; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transform: translateX(-50%); user-select: none; }
         #highlight-tooltip { background-color: #333; }
         #highlight-tooltip:hover { background-color: #ffc107; color: #000; }
         #remove-highlight-tooltip { background-color: #dc3545; z-index: 1001; }
         #remove-highlight-tooltip:hover { background-color: #c82333; }
-
         ::selection { background-color: #b3d4fc; }
 
-        /* MODAL HIỂN THỊ BAND ĐIỂM (POPUP TO Ở GIỮA) */
-        #band-score-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.85);
-            z-index: 3000;
-            display: none; 
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-        }
-        .modal-box {
-            background-color: #fff;
-            padding: 50px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            min-width: 400px;
-        }
-        @keyframes popUp {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        /* MODAL KẾT QUẢ */
+        #band-score-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.85); z-index: 3000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal-box { background-color: #fff; padding: 50px; border-radius: 12px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); min-width: 400px; }
+        @keyframes popUp { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         .modal-title { font-size: 32px; font-weight: bold; color: #333; margin-top: 0; margin-bottom: 10px; }
         .modal-score { font-size: 20px; color: #666; margin-bottom: 25px; }
         .modal-band-display { font-size: 80px; font-weight: bold; color: #28a745; margin: 10px 0; text-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
         .modal-btn-group { display: flex; gap: 15px; justify-content: center; margin-top: 30px; }
         .modal-btn { padding: 12px 25px; font-size: 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .btn-review { background-color: #ffc107; color: #333; }
-        .btn-review:hover { background-color: #e0a800; }
     </style>
 </head>
 <body>
@@ -142,7 +118,7 @@
         <div class="box-container">
             <div class="box-title">IELTS Reading Mock Test</div>
             <p>Vui lòng nhập họ tên của bạn để bắt đầu làm bài.</p>
-            <input type="text" id="student-name" class="input-name" placeholder="Ví dụ: Nguyễn Văn A" autocomplete="off">
+            <input type="text" id="student-name" class="input-name" placeholder="Ví dụ: Nguyễn Lê Như Ngọc" autocomplete="off">
             <button class="btn-large btn-start" onclick="startTest()">BẮT ĐẦU THI</button>
             <button class="btn-large btn-history" onclick="showHistoryFromWelcome()">Xem lịch sử điểm</button>
         </div>
@@ -150,7 +126,7 @@
 
     <div id="selection-screen" class="outer-screen" style="display: none;">
         <div class="selection-container">
-            <div class="selection-header-title">IELTS Reading Bank</div>
+            <div class="selection-header-title">IELTS Reading Bank (400 Tests)</div>
             <ul class="selection-list" id="test-list">
                 </ul>
         </div>
@@ -163,16 +139,9 @@
             <div class="history-table-wrapper">
                 <table id="history-table">
                     <thead>
-                        <tr>
-                            <th>Họ và tên</th>
-                            <th>Bài thi</th>
-                            <th>Câu đúng</th>
-                            <th>Band điểm</th>
-                            <th>Thời gian nộp bài</th>
-                        </tr>
+                        <tr><th>Họ và tên</th><th>Bài thi</th><th>Câu đúng</th><th>Band điểm</th><th>Thời gian nộp bài</th></tr>
                     </thead>
-                    <tbody id="history-tbody">
-                    </tbody>
+                    <tbody id="history-tbody"></tbody>
                 </table>
             </div>
             <button class="btn-large btn-history" id="history-back-btn" onclick="navigateScreen('welcome-screen')">Quay lại</button>
@@ -185,62 +154,54 @@
             <p class="modal-score">Số câu đúng: <span id="popup-raw-score" style="font-weight: bold; color: #0056b3;"></span>/40</p>
             <div class="modal-band-display">Band <span id="popup-band-score"></span></div>
             <p style="font-size: 13px; color: #999;">*Band điểm được tính dựa trên bảng quy đổi IELTS Reading Academic.</p>
-            
             <div class="modal-btn-group">
                 <button class="modal-btn btn-review" onclick="closeBandModal()">Xem lại bài thi</button>
-                <button class="modal-btn btn-history" onclick="showHistoryFromTest()">Thoát & Xem lịch sử</button>
+                <button class="modal-btn btn-history" style="background-color: #6c757d; color: white;" onclick="showHistoryFromTest()">Thoát & Lịch sử</button>
             </div>
         </div>
     </div>
 
     <div id="test-screen">
         <div id="exam-timer">Time left: 60:00</div>
-        
-        <button class="back-bank-btn" onclick="confirmExitTest()">‹ Quay lại</button>
+        <button class="back-bank-btn" onclick="confirmExitTest()">‹ Quay lại Kho Đề</button>
 
         <div id="highlight-tooltip">Highlight</div>
         <div id="remove-highlight-tooltip">Bỏ highlight</div>
 
         <div class="tabs-area">
-            <button class="tab-btn active" id="tab-btn-1" onclick="switchTab(1)">Passage 1</button>
-            <button class="tab-btn" id="tab-btn-2" onclick="switchTab(2)">Passage 2</button>
-            <button class="tab-btn" id="tab-btn-3" onclick="switchTab(3)">Passage 3</button>
+            <button class="tab-btn active" id="tab-btn-1" onclick="switchTab(1)">
+                Passage 1
+                <span id="badge-1" class="tab-badge">0</span>
+            </button>
+            <button class="tab-btn" id="tab-btn-2" onclick="switchTab(2)">
+                Passage 2
+                <span id="badge-2" class="tab-badge">0</span>
+            </button>
+            <button class="tab-btn" id="tab-btn-3" onclick="switchTab(3)">
+                Passage 3
+                <span id="badge-3" class="tab-badge">0</span>
+            </button>
         </div>
 
         <div class="passage-wrapper active" id="p1-wrapper">
-            <div class="panel left-panel">
-                <div class="passage-title" id="display-p1-title"></div>
-                <div id="display-p1-content"></div>
-            </div>
-            <div class="panel right-panel">
-                <div class="questions-container" id="display-p1-questions"></div>
-            </div>
+            <div class="panel left-panel"><div class="passage-title" id="display-p1-title"></div><div id="display-p1-content"></div></div>
+            <div class="panel right-panel"><div class="questions-container" id="display-p1-questions"></div></div>
         </div>
 
         <div class="passage-wrapper" id="p2-wrapper">
-            <div class="panel left-panel">
-                <div class="passage-title" id="display-p2-title"></div>
-                <div id="display-p2-content"></div>
-            </div>
-            <div class="panel right-panel">
-                <div class="questions-container" id="display-p2-questions"></div>
-            </div>
+            <div class="panel left-panel"><div class="passage-title" id="display-p2-title"></div><div id="display-p2-content"></div></div>
+            <div class="panel right-panel"><div class="questions-container" id="display-p2-questions"></div></div>
         </div>
 
         <div class="passage-wrapper" id="p3-wrapper">
-            <div class="panel left-panel">
-                <div class="passage-title" id="display-p3-title"></div>
-                <div id="display-p3-content"></div>
-            </div>
-            <div class="panel right-panel">
-                <div class="questions-container" id="display-p3-questions"></div>
-            </div>
+            <div class="panel left-panel"><div class="passage-title" id="display-p3-title"></div><div id="display-p3-content"></div></div>
+            <div class="panel right-panel"><div class="questions-container" id="display-p3-questions"></div></div>
         </div>
 
         <div class="submit-area">
             <div id="finalResult"></div>
             <button class="submit-btn" id="submitBtn" onclick="checkAll()">Submit</button>
-            <button class="submit-btn" id="exit-btn" onclick="showHistoryFromTest()">Thoát & Xem lịch sử</button>
+            <button class="submit-btn" id="exit-btn" onclick="showHistoryFromTest()">Thoát & Lịch sử</button>
         </div>
     </div>
 
@@ -2457,7 +2418,7 @@
         </div>
 
 
-    </div>
+   </div>
 
     <script>
         // Mở rộng mảng dữ liệu hỗ trợ lên 400 đề
@@ -2465,6 +2426,7 @@
             id: `test${i + 1}`,
             name: `IELTS Reading Test ${i + 1}`
         }));
+        
         let currentTestId = "";
         let currentUser = "";
         let currentAnswers = {};
@@ -2515,7 +2477,7 @@
             renderSelectionList();
         }
 
-        /* XEM LỊCH SỬ TỪ TRANG CHỦ (Yêu cầu đăng nhập tên) */
+        /* XEM LỊCH SỬ TỪ TRANG CHỦ */
         function showHistoryFromWelcome() {
             let nameInput = document.getElementById('student-name').value.trim();
             if (!nameInput) {
@@ -2523,38 +2485,32 @@
                 return;
             }
             currentUser = nameInput.toUpperCase();
-            
-            // Gắn hành động cho nút quay lại: Từ Lịch sử -> Trang chủ
             document.getElementById('history-back-btn').setAttribute('onclick', "navigateScreen('welcome-screen')");
-            
             navigateScreen('history-screen');
             renderHistoryTable();
         }
 
-        /* XEM LỊCH SỬ KHI VỪA NỘP BÀI THI XONG */
+        /* XEM LỊCH SỬ TỪ TRONG TEST (SAU KHI NỘP BÀI) */
         function showHistoryFromTest() {
-            // Gắn hành động cho nút quay lại: Từ Lịch sử -> Màn hình chọn bài
+            closeBandModal();
             document.getElementById('history-back-btn').setAttribute('onclick', "navigateScreen('selection-screen')");
-            
             navigateScreen('history-screen');
             renderHistoryTable();
         }
 
-        /* HIỂN THỊ DANH SÁCH 400 BÀI THI KHO ĐỀ (LỌC THEO TÊN NGƯỜI ĐĂNG NHẬP) */
+        /* HIỂN THỊ 400 ĐỀ TRÊN MÀN HÌNH LỰA CHỌN */
         function renderSelectionList() {
             const listEl = document.getElementById('test-list');
             listEl.innerHTML = "";
             let history = JSON.parse(localStorage.getItem('ieltsMockHistory')) || [];
 
-            // Quét tự động kho dữ liệu ẩn để tìm đề thi hiện có (hoặc sinh ra 400 đề ảo)
             const dbTests = document.querySelectorAll('#test-database > div[id^="data-test"]');
             const availableTestIds = Array.from(dbTests).map(el => el.id.replace('data-', ''));
 
-            // Chạy loop sinh ra 400 giao diện đề (Chỉ những đề có dữ liệu trong Database mới cho bấm)
             for(let i=1; i<=400; i++) {
                 let tId = `test${i}`;
                 let tName = `IELTS Reading Test ${i}`;
-                let isAvailable = availableTestIds.includes(tId); // Kiểm tra xem đề đã được bạn nhập vào Database chưa
+                let isAvailable = availableTestIds.includes(tId); 
 
                 let userRecords = history.filter(r => r.name === currentUser && r.testId === tId);
                 let bestBand = "";
@@ -2564,7 +2520,6 @@
 
                 let li = document.createElement('li');
                 li.className = "selection-item";
-                // Nếu chưa có dữ liệu trong db ẩn, báo chưa cập nhật.
                 if(isAvailable) {
                     li.onclick = () => loadTest(tId, tName);
                 } else {
@@ -2583,23 +2538,20 @@
             }
         }
 
-        /* NẠP BÀI THI TỪ KHO DATABASE ẨN (RESET VÀ ĐỔ DỮ LIỆU) */
+        /* NẠP ĐỀ TỪ DATABASE VÀ THEO DÕI TIẾN ĐỘ TỰ ĐỘNG */
         function loadTest(testId, testName) {
             const dataNode = document.getElementById('data-' + testId);
             if(!dataNode) return;
 
             currentTestId = testId;
-            // Load key đáp án từ Database
             currentAnswers = JSON.parse(dataNode.querySelector('.ans-data').textContent);
 
-            // Đổ nội dung HTML từ Database ẩn vào Khung trống giao diện
             for(let i=1; i<=3; i++) {
                 document.getElementById(`display-p${i}-title`).innerHTML = dataNode.querySelector(`.p${i}-title`).innerHTML;
                 document.getElementById(`display-p${i}-content`).innerHTML = dataNode.querySelector(`.p${i}-content`).innerHTML;
                 document.getElementById(`display-p${i}-questions`).innerHTML = dataNode.querySelector(`.p${i}-questions`).innerHTML;
             }
 
-            // Mở màn hình bài test
             navigateScreen('test-screen');
             
             // Xóa Highlight văn bản (Reset UI)
@@ -2624,7 +2576,11 @@
                 }
             }
             
-            // Reset giao diện và nút bấm
+            // Cài đặt lắng nghe tiến độ điền câu hỏi
+            initProgressTracking();
+            updateProgressBadges();
+
+            // Reset trạng thái Button Submit
             document.getElementById('finalResult').style.display = 'none';
             document.getElementById('submitBtn').style.display = 'inline-block';
             document.getElementById('submitBtn').disabled = false;
@@ -2642,6 +2598,52 @@
             switchTab(1); // Mặc định mở Tab Passage 1
         }
 
+        /* LẮNG NGHE NGƯỜI DÙNG NHẬP HOẶC CHỌN ĐÁP ÁN ĐỂ CẬP NHẬT BADGE */
+        function initProgressTracking() {
+            const container = document.getElementById('test-screen');
+            // Cập nhật khi gõ chữ (input) hoặc khi chọn dropdown (change)
+            container.oninput = handleInputEvent;
+            container.onchange = handleInputEvent;
+        }
+
+        function handleInputEvent(e) {
+            if (e.target.id && e.target.id.startsWith('q')) {
+                updateProgressBadges();
+            }
+        }
+
+        /* ĐẾM VÀ CẬP NHẬT SỐ CÂU ĐÃ LÀM VÀO BONG BÓNG MINI */
+        function updateProgressBadges() {
+            for (let p = 1; p <= 3; p++) {
+                let passageContainer = document.getElementById(`display-p${p}-questions`);
+                if (!passageContainer) continue;
+
+                // Lấy tất cả input/select có ID bắt đầu bằng chữ 'q' trong passage này
+                let inputs = passageContainer.querySelectorAll('input[id^="q"], select[id^="q"]');
+                let total = inputs.length;
+                let answered = 0;
+
+                inputs.forEach(el => {
+                    if (el.tagName === 'SELECT' && el.value.trim() !== "") answered++;
+                    else if (el.tagName === 'INPUT' && el.value.trim() !== "") answered++;
+                });
+
+                const badge = document.getElementById(`badge-${p}`);
+                if (badge) {
+                    if (total > 0 && answered === total) {
+                        badge.innerHTML = "✓";
+                        badge.classList.add('completed');
+                    } else {
+                        badge.innerHTML = answered;
+                        badge.classList.remove('completed');
+                    }
+                    
+                    // Ẩn badge nếu đoạn đó không có câu hỏi nào (hiếm khi xảy ra)
+                    badge.style.display = total === 0 ? 'none' : 'flex';
+                }
+            }
+        }
+
         /* NÚT QUAY LẠI KHO ĐỀ (CẢNH BÁO) */
         function confirmExitTest() {
             if(confirm("Bạn có chắc chắn muốn thoát? Điểm số bài làm hiện tại sẽ KHÔNG được lưu.")) {
@@ -2651,13 +2653,12 @@
             }
         }
 
-        /* BẢNG LỊCH SỬ (CHỈ HIỂN THỊ LỊCH SỬ CỦA TÊN ĐÃ ĐĂNG NHẬP) */
+        /* BẢNG LỊCH SỬ THI */
         function renderHistoryTable() {
             let history = JSON.parse(localStorage.getItem('ieltsMockHistory')) || [];
             let tbody = document.getElementById('history-tbody');
             tbody.innerHTML = "";
             
-            // LỌC: Chỉ giữ lại các bản ghi trùng với currentUser
             let myHistory = history.filter(r => r.name === currentUser);
             
             if (myHistory.length === 0) {
@@ -2682,7 +2683,7 @@
             document.getElementById('band-score-modal').style.display = 'none';
         }
 
-        /* CHUYỂN TABS */
+        /* CHUYỂN TABS CHÍNH */
         function switchTab(tabIndex) {
             document.querySelectorAll('.passage-wrapper').forEach(wrapper => { wrapper.classList.remove('active'); });
             document.querySelectorAll('.tab-btn').forEach(btn => { btn.classList.remove('active'); });
@@ -2694,7 +2695,7 @@
             document.getElementById('remove-highlight-tooltip').style.display = 'none';
         }
 
-        /* ĐỒNG HỒ */
+        /* ĐỒNG HỒ ĐẾM NGƯỢC */
         function updateTimer() {
             if (timeLeft <= 0) {
                 clearInterval(timerInterval); 
@@ -2702,7 +2703,6 @@
                 timerElement.style.backgroundColor = "#dc3545"; 
                 timerElement.style.color = "#fff"; 
                 timerElement.classList.add('timer-warning');
-                
                 checkAll(); 
                 return;
             }
@@ -2727,7 +2727,7 @@
             timeLeft--;
         }
 
-        /* CHẤM ĐIỂM 40 CÂU, HIỂN THỊ BAND VÀ LƯU LỊCH SỬ */
+        /* CHẤM ĐIỂM 40 CÂU (HỖ TRỢ NHIỀU ĐÁP ÁN: MỖI CÁI CÁCH NHAU DẤU |) */
         function checkAll() {
             clearInterval(timerInterval);
             document.getElementById('submitBtn').disabled = true;
@@ -2738,20 +2738,25 @@
             timerElement.classList.add('timer-warning');
 
             let score = 0;
-            // Chấm tự động dựa theo Key Đáp án (currentAnswers) của đề hiện tại được load từ Database
+            
             for (let i = 1; i <= 40; i++) {
                 let el = document.getElementById('q' + i);
                 if (!el) continue; 
                 
                 let isCorrect = false;
-                let correctAns = currentAnswers['q' + i] ? String(currentAnswers['q' + i]) : "";
+                // Nhận giá trị chuỗi đáp án từ Database
+                let correctAnsStr = currentAnswers['q' + i] ? String(currentAnswers['q' + i]) : "";
+                
+                // Tách chuỗi thành mảng các đáp án được chấp nhận (Dùng dấu |)
+                let possibleAnswers = correctAnsStr.split('|').map(ans => ans.trim().toUpperCase());
+                let userAns = el.value.trim().toUpperCase();
 
-                if (el.tagName === 'INPUT') {
-                    isCorrect = (el.value.trim().toUpperCase() === correctAns.toUpperCase());
-                } else {
-                    isCorrect = (el.value === correctAns);
+                // Kiểm tra đáp án
+                if (el.tagName === 'INPUT' || el.tagName === 'SELECT') {
+                    isCorrect = possibleAnswers.includes(userAns);
                 }
 
+                // Tùy chỉnh màu ô dựa trên độ chính xác
                 if (isCorrect) {
                     el.style.backgroundColor = "#d4edda"; 
                     el.style.borderColor = "#28a745";
@@ -2761,6 +2766,7 @@
                     el.style.borderColor = "#dc3545";
                 }
 
+                // Chèn nhãn hiển thị đáp án bên cạnh
                 let ansDisplay = document.getElementById('ans-show-' + i);
                 if (!ansDisplay) {
                     ansDisplay = document.createElement('span');
@@ -2771,28 +2777,26 @@
                     ansDisplay.style.whiteSpace = 'nowrap';
                     el.parentNode.insertBefore(ansDisplay, el.nextSibling);
                 }
-                ansDisplay.textContent = `[Key: ${correctAns}]`;
+                
+                // Thay thế dấu '|' thành dấu '/' để người dùng xem dễ hiểu
+                let displayKey = correctAnsStr.split('|').map(ans => ans.trim()).join(' / ');
+                ansDisplay.textContent = `[Key: ${displayKey}]`;
                 ansDisplay.style.color = isCorrect ? '#28a745' : '#dc3545';
                 
                 el.disabled = true;
             }
 
-            // Tính toán Band điểm
             let bandScore = calculateBandScore(score);
 
-            // Cập nhật và Hiển thị Modal Band Score ở giữa màn hình
             document.getElementById('popup-raw-score').textContent = score;
             document.getElementById('popup-band-score').textContent = bandScore;
             document.getElementById('band-score-modal').style.display = 'flex';
 
-            // Cập nhật kết quả thu gọn ở góc dưới
             document.getElementById('finalResult').innerHTML = "Score: " + score + "/40 | Band: " + bandScore;
 
-            // Đổi nút bấm
             document.getElementById('exit-btn').style.display = 'inline-block';
             document.getElementById('submitBtn').style.display = 'none';
 
-            // Lưu dữ liệu vào Local Storage
             let history = JSON.parse(localStorage.getItem('ieltsMockHistory')) || [];
             history.push({
                 name: currentUser,
@@ -2805,7 +2809,7 @@
             localStorage.setItem('ieltsMockHistory', JSON.stringify(history));
         }
 
-        /* CHỨC NĂNG HIGHLIGHT */
+        /* HỆ THỐNG HIGHLIGHT VĂN BẢN (KHÔNG ĐỔI) */
         const addTooltip = document.getElementById('highlight-tooltip');
         const removeTooltip = document.getElementById('remove-highlight-tooltip');
         let currentHighlightSpan = null;
