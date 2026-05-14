@@ -47,7 +47,7 @@
         .passage-wrapper.active { display: flex; }
 
         .panel { flex: 1; padding: 25px; overflow-y: auto; padding-bottom: 60px; }
-        .left-panel { background-color: #fff; border-right: 2px solid #ced4da; line-height: 1.7; color: #333; position: relative; padding-top: 55px; } 
+        .panel { background-color: #fff; border-right: 2px solid #ced4da; line-height: 1.7; color: #333; position: relative; padding-top: 55px; } 
         .right-panel { background-color: #f8f9fa; position: relative; display: flex; flex-direction: column; padding-top: 30px; }
         
         .passage-title { color: #0056b3; font-size: 26px; font-weight: bold; margin-bottom: 10px; border-bottom: 2px solid #0056b3; display: inline-block; }
@@ -2555,7 +2555,7 @@
             navigateScreen('test-screen');
             
             // Xóa Highlight văn bản (Reset UI)
-            document.querySelectorAll('.left-panel span[style*="background-color"]').forEach(span => {
+            document.querySelectorAll('.panel span[style*="background-color"]').forEach(span => {
                 const parent = span.parentNode;
                 while(span.firstChild) {
                     parent.insertBefore(span.firstChild, span);
@@ -2861,7 +2861,7 @@
 
         document.addEventListener('click', function(e) {
             const target = e.target;
-            if (target.style && target.style.backgroundColor && target.closest('.left-panel')) {
+            if (target.style && target.style.backgroundColor && target.closest('.panel')) {
                 currentHighlightSpan = target;
                 const rect = target.getBoundingClientRect();
                 
