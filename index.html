@@ -47,7 +47,7 @@
         .passage-wrapper.active { display: flex; }
 
         .panel { flex: 1; padding: 25px; overflow-y: auto; padding-bottom: 60px; }
-        .panel { background-color: #fff; border-right: 2px solid #ced4da; line-height: 1.7; color: #333; position: relative; padding-top: 55px; } 
+        .left-panel { background-color: #fff; border-right: 2px solid #ced4da; line-height: 1.7; color: #333; position: relative; padding-top: 55px; } 
         .right-panel { background-color: #f8f9fa; position: relative; display: flex; flex-direction: column; padding-top: 30px; }
         
         .passage-title { color: #0056b3; font-size: 26px; font-weight: bold; margin-bottom: 10px; border-bottom: 2px solid #0056b3; display: inline-block; }
@@ -63,7 +63,7 @@
         select, .blank-input { padding: 4px; border: 1px solid #adb5bd; border-radius: 4px; margin-right: 10px; font-size: 14px; outline: none; font-family: inherit; }
         .blank-input:focus { border-color: #0056b3; box-shadow: 0 0 3px rgba(0,86,179,0.3); }
         
-        /* Khoảng cách chuẩn cho khung điền từ (Summary / Flowchart) */
+        /* Khoảng cách chuẩn cho khung điền từ */
         .summary-box { line-height: 2.3; text-align: justify; padding: 15px; background: #f9f9f9; border-radius: 5px; }
 
         /* TABS VÀ BADGE TIẾN ĐỘ */
@@ -93,7 +93,7 @@
         @keyframes shakeTimer { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
         .shake-anim { animation: shakeTimer 0.4s; animation-iteration-count: 4; }
 
-        /* HIGHLIGHT TOOLTIPS */
+        /* HIGHLIGHT TOOLTIPS (Đã áp dụng cho cả .panel trái và phải) */
         #highlight-tooltip, #remove-highlight-tooltip { position: absolute; display: none; color: #fff; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transform: translateX(-50%); user-select: none; }
         #highlight-tooltip { background-color: #333; }
         #highlight-tooltip:hover { background-color: #ffc107; color: #000; }
@@ -118,7 +118,7 @@
         <div class="box-container">
             <div class="box-title">IELTS Reading Mock Test</div>
             <p>Vui lòng nhập họ tên của bạn để bắt đầu làm bài.</p>
-            <input type="text" id="student-name" class="input-name" placeholder="Ví dụ: Nguyễn Văn A" autocomplete="off">
+            <input type="text" id="student-name" class="input-name" placeholder="Ví dụ: Nguyễn Lê Như Ngọc" autocomplete="off">
             <button class="btn-large btn-start" onclick="startTest()">BẮT ĐẦU THI</button>
             <button class="btn-large btn-history" onclick="showHistoryFromWelcome()">Xem lịch sử điểm</button>
         </div>
@@ -2418,7 +2418,7 @@
         </div>
 
 
-   </div>
+  </div>
 
     <script>
         // Mở rộng mảng dữ liệu hỗ trợ lên 400 đề
@@ -2638,7 +2638,7 @@
                         badge.classList.remove('completed');
                     }
                     
-                    // Ẩn badge nếu đoạn đó không có câu hỏi nào (hiếm khi xảy ra)
+                    // Ẩn badge nếu đoạn đó không có câu hỏi nào
                     badge.style.display = total === 0 ? 'none' : 'flex';
                 }
             }
@@ -2809,7 +2809,7 @@
             localStorage.setItem('ieltsMockHistory', JSON.stringify(history));
         }
 
-        /* HỆ THỐNG HIGHLIGHT VĂN BẢN (KHÔNG ĐỔI) */
+        /* HỆ THỐNG HIGHLIGHT VĂN BẢN (ĐÃ MỞ RỘNG CHO CẢ KHUNG TRÁI VÀ PHẢI) */
         const addTooltip = document.getElementById('highlight-tooltip');
         const removeTooltip = document.getElementById('remove-highlight-tooltip');
         let currentHighlightSpan = null;
@@ -2820,17 +2820,18 @@
                 const text = selection.toString().trim();
 
                 if (text.length > 0 && selection.rangeCount > 0) {
-                    let isLeftPanel = false;
+                    let isPanel = false;
                     let current = selection.anchorNode;
                     while (current && current !== document.body) {
-                        if (current.classList && current.classList.contains('left-panel')) {
-                            isLeftPanel = true;
+                        // Nhận diện Highlight áp dụng cho cả .panel trái (bài đọc) và phải (câu hỏi)
+                        if (current.classList && current.classList.contains('panel')) { 
+                            isPanel = true;
                             break;
                         }
                         current = current.parentNode;
                     }
 
-                    if (isLeftPanel) {
+                    if (isPanel) {
                         const range = selection.getRangeAt(0);
                         const rect = range.getBoundingClientRect();
                         
@@ -2861,7 +2862,8 @@
 
         document.addEventListener('click', function(e) {
             const target = e.target;
-            if (target.style && target.style.backgroundColor && target.closest('.panel')) {
+            // Nhận diện xóa Highlight trên toàn bộ .panel
+            if (target.style && target.style.backgroundColor && target.closest('.panel')) { 
                 currentHighlightSpan = target;
                 const rect = target.getBoundingClientRect();
                 
