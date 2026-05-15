@@ -5,17 +5,22 @@
     <title>Làm bài thi | Ngọc's IELTS</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; background: #f4f7f9; }
-        .header { position: fixed; top: 0; width: 100%; height: 50px; background: #1a73e8; color: white; display: flex; align-items: center; padding: 0 20px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 1000; }
-        .passage { width: 50%; padding: 30px; overflow-y: auto; background: white; border-right: 2px solid #e0e0e0; margin-top: 50px; line-height: 1.6; }
-        .questions { width: 50%; padding: 30px; overflow-y: auto; background: #f9f9f9; margin-top: 50px; }
-        .q-item { background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #ddd; }
-        input[type="text"] { border: 1px solid #ccc; border-radius: 4px; padding: 5px 10px; width: 200px; margin-left: 10px; }
-        h1 { color: #1a73e8; font-size: 24px; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; background: #f4f7f9; }
+        .header { position: fixed; top: 0; width: 100%; height: 60px; background: #1a73e8; color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; font-weight: bold; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000; box-sizing: border-box; }
+        .passage { width: 50%; padding: 40px; overflow-y: auto; background: white; border-right: 2px solid #e0e0e0; margin-top: 60px; line-height: 1.8; font-size: 17px; color: #333; }
+        .questions { width: 50%; padding: 40px; overflow-y: auto; background: #f9f9f9; margin-top: 60px; }
+        .q-item { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #ddd; }
+        input[type="text"] { border: 1px solid #ccc; border-radius: 4px; padding: 8px 12px; width: 180px; margin-left: 10px; }
+        h1 { color: #1a73e8; font-size: 26px; }
+        #submit-btn { background: #34a853; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
-    <div class="header" id="test-title">Đang tải đề thi...</div>
+    <div class="header">
+        <div id="test-title">Đang tải đề thi...</div>
+        <button id="submit-btn" onclick="submitExam()">Nộp bài</button>
+    </div>
+    
     <div class="passage" id="p-content"></div>
     <div class="questions" id="q-content"></div>
 
@@ -24,7 +29,8 @@
         const SUPABASE_ANON_KEY = "sb_publishable_pDcY-tGuJbDulH0whCb3hg_6-egn0Bm";
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        const testId = new URLSearchParams(window.location.search).get('id');
+        const urlParams = new URLSearchParams(window.location.search);
+        const testId = urlParams.get('id');
 
         async function loadData() {
             try {
@@ -36,34 +42,43 @@
 
                 if (error) throw error;
                 
-                // LƯU Ý: Đoạn này phải truy cập đúng vào [0] vì dữ liệu là mảng
-                const d = data.data; 
-                const firstPassage = d.passages[0];
+                let d = data.data;
+                if (Array.isArray(d)) d = d[0];
 
-                document.getElementById('test-title').innerText = d.metadata.test_name;
+                const testName = d.metadata?.test_name || d.test_name || "IELTS Reading Test";
+                document.getElementById('test-title').innerText = testName;
                 
-                // Hiển thị bài đọc
-                document.getElementById('p-content').innerHTML = `
-                    <h1>${firstPassage.title}</h1>
-                    <div class="content">${firstPassage.content}</div>
-                `;
-                
-                // Hiển thị câu hỏi
-                let qHtml = "<h3>Questions</h3>";
-                firstPassage.questions.forEach(q => {
-                    qHtml += `
-                        <div class="q-item">
-                            <b>${q.number}.</b> ${q.text} 
-                            <input type="text" placeholder="Your answer...">
-                        </div>
+                let passageObj = null;
+                if (d.passages) {
+                    passageObj = Array.isArray(d.passages) ? d.passages[0] : d.passages;
+                }
+
+                if (passageObj) {
+                    document.getElementById('p-content').innerHTML = `
+                        <h1>${passageObj.title || "No Title"}</h1>
+                        <div>${passageObj.content || "No Content Found"}</div>
                     `;
-                });
-                document.getElementById('q-content').innerHTML = qHtml;
-
+                    
+                    let qHtml = "<h3>Questions</h3>";
+                    const questions = passageObj.questions || [];
+                    questions.forEach(q => {
+                        qHtml += `
+                            <div class="q-item">
+                                <b>${q.number}.</b> ${q.text} 
+                                <input type="text" placeholder="Nhập đáp án..." class="user-answer">
+                            </div>
+                        `;
+                    });
+                    document.getElementById('q-content').innerHTML = qHtml;
+                }
             } catch (err) {
-                console.error(err);
-                document.getElementById('test-title').innerText = "Lỗi nạp đề thi!";
+                console.error("Lỗi:", err);
+                document.getElementById('test-title').innerText = "Lỗi kết nối database!";
             }
+        }
+
+        function submitExam() {
+            alert("Bài làm đã được ghi nhận!");
         }
 
         if (testId) loadData();
